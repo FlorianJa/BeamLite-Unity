@@ -1,0 +1,336 @@
+# Release Notes
+
+## v6.0.0 (2018-01-16)
+
+- _Experimental_ Acoustic Echo Cancellation (AEC). Automatically removes speaker sounds from the microphone input; preventing feedback loops, echoing voices and transmitting game sound effects.
+ - Each client may now use different encoding settings (quality, frame size, codec).
+ - Added timestamps to Dissonance log messages.
+ - No longer return VoicePlayback component from VoicePlayerState, instead returning IVoicePlayback object. This lays the groundwork for alternative playback systems (e.g. FMOD/WWise) in the future.
+
+ - Fixed clients (particularly with HLAPI) sometimes getting stuck in a connect/disconnect loop and never sending/receiving any voice.
+ - Fixed string hashing using GetHashCode which is not stable between runtimes. Now using an FNV-1a hash for all string hashing.
+ - Fixed GetSpeakingChannels returning all channels as if they were Player channels.
+ - Fixed buffered network packets potentially 'leaking' from one session to the next when the comms network is shut down and restarted.
+ - Fixed a potential NullReferenceException in HLAPI integration if NetworkManager.singleton returns null.
+ - Fixed preprocessor thread waking up too frequently when there is no work to do, significantly reducing CPU usage.
+ - Prevented the Lost NN samples in the preprocessor (buffer full), injecting silence to compensate message appearing every frame once any samples had been lost.
+
+## v5.0.0 (2017-12-11)
+
+**Features**
+ - Added remote channels API. If a client is receiving speech from another client they can now discover which channels the remote client is speaking through. Call GetSpeakingChannels on the player state object for any peer to get a snapshot of the channels.
+ - Added automatic attenuation for remote speech when the local client is transmitting speech. By default a _very_ small attenuation is applied, change this in Window > Dissonance > Quality Settings > Audio Duck Attenuation
+ - Changed LLAPI integration error handling to be more consistent with other network integrations. This should result in more informative error messages.
+
+**Bugfixes**
+ - Fixed an issue where the transmission system could stop sending packets even while channels are open. Usually caused by rapidly toggling speech on and off.
+ - Changed which network events the LLAPI integration considers to be an error - clients consider a timeout to be an error, the server does not.
+
+**Known Issues**
+ - No Acoustic Echo Cancellation (Work in progress - Contact us if you're interested in testing this)
+
+## v4.0.1 (2017-11-28)
+
+- Updated FNR integration to v24 (latest available on asset store)
+
+ - Fixed critical issues introduced in 4.0.0 which prevented Dissonance from working on any non-windows platforms
+
+ - No Acoustic Echo Cancellation (Work in progress - Contact us if you're interested in testing this)
+
+## v4.0.0 (2017-11-13)
+
+**Features:**
+ - New microphone API allows custom microphone capture scripts
+   - Implement IMicrophoneCapture interface on a MonoBehaviour and add this as a sibling to DissonanceComms. Dissonance will default to BasicMicrophoneCapture if there is no custom microphone component.
+   - Small improvements to the preprocessor. Slightly reducing latency and improving robustness.
+ - New Remote Rooms API exposes which rooms remote players are listening to
+   - VoicePlayerState:Rooms property lists room names
+   - VoicePlayerState:OnEnteredRoom and VoicePlayerState:OnExitedRoom events
+   - DissonanceComms:OnPlayerEnteredRoom and DissonanceComms:OnPlayerExitedRoom events
+ - Changed menu item from Windows > Dissonance > Welcome Window to Windows > Dissonance > Integrations
+ - Added a method for custom network scripts to signal fatal errors
+ - Added VoicePlaybackState:SpeakerPriority which fetches the current priority a player is speaking with
+ - Added an exit button in the Photon demo scene
+ - Compiled iOS binaries with bitcode
+
+**Bug Fixes:**
+ - Handling the case when a network client connects even when it is already connected with a different network connection
+ - More robustly handling HLAPI clients timing out (preventing a potential server crash and restart)
+ - Fixed UWP build not passing app store certification
+
+**Known Issues:**
+ - No Acoustic Echo Cancellation (Work in progress - Contact us if you're interested in testing this)
+
+## v3.0.3 (2017-10-12)
+
+**Features:**
+ - Added a setting to "deafen" the local player (prevent all voices from being heard locally). Accessible in the DissonanceComms component inspector or in scripts with the `DissonanceComms:IsDeafened` property
+ - Compiled binaries for iOS with bitcode
+
+**Bug Fixes:**
+ - Fixed some state being left on the server when a player disconnects, potentially crashing the server if the player reconnects (#55)
+ - Removed an error printed when a client leaves the session (#56)
+ - Exponentially backing off the frame skip detector so that it does not detect multiple skips within a short period of time (#58)
+ - Fixed the ErrorWrongSession packet which contained the wrong session number and caused endless log spam (#59)
+ - Removed use of <code>Math.DivRem</code> function which is not available on UWP (hololens) (#61)
+ - Fixed PUN integration throwing ErrorWrongSession errors if used in multiple sessions
+ - Sending "User Left" events for all users in the session immediately before shutting down the session
+ - Fixed the volume setting being ignored when opening a new channel (it was previously always initialised to 1)
+ - Fixed a potential crash in the server if a non Dissonance packet was passed to the server
+ - Ensured that client always disconnects itself if any exception occurs when updating the client - it should instantly attempt to reconnect itself to recover from the error
+
+**Known Issues:**
+ - UWP does not support ARM architecture (i.e. Windows Phone - Contact us if you're interested in this)
+ - No Acoustic Echo Cancellation (Work in progress - Contact us if you're interested in helping to test this)
+
+## v3.0.2 (2017-09-08)
+
+**Bug Fixes:**
+ - Fixed an issue which would cause joining clients to crash if any other client had ever left the session.
+
+## v3.0.1 (2017-09-07)
+
+**Features:**
+ - Added an update window which will pop up when a new version of Dissonance is available
+  - The window will only show up once for each new version
+  - If you do not want this it is easy to toggle off the check and it will _never_ show up again
+ - Added dynamic quality adjustment based on packet loss - encoder will dynamically trade off quality for packet loss resilience (#47)
+ - Upgraded to Opus 1.2.1, this will slightly improve the quality of high quality speech
+ - Modified the encoder to more promptly close channels, this will slightly improve the last 250ms of speech
+ - Added in a `BasePath` const which is used as the root of all direct filesystem access Dissonance does in the editor (#51)
+ - Added more items to the `Window > Dissonance` menu
+ - Added a warning (printed into the log) if `Application.runInBackground` is not set
+
+**Bug Fixes:**
+ - Fixed the network system not properly removing clients when they left the session - this would cause the server to crash when the ~30th person joined the session.
+ - Fixed the `OnStartedSpeaking` event being invoked when a player had multiple channels open and closed one (but continued speaking)
+ - Fixed noise suppressor level not being applied (it always used the `High` setting)
+ - Fixed a rare case where the voice detector could stop receiving events when the capture pipeline was reset
+ - Fixed a exception in the HLAPI integration when Dissonance tries to send a packet before the HLAPI is ready (#48)
+ - Fixed audio desync on clients if the editor is paused while someone is speaking
+ - Fixed audio desync when the editor stutters e.g. due to editor GUI interaction (#28)
+
+**Known Issues:**
+ - UWP does not support ARM architecture (i.e. Windows Phone - Contact us if you're interested in this)
+ - No Acoustic Echo Cancellation (Work in progress)
+ - iOS does not support bitcode (Work in progress)
+
+## v3.0.0 (2017-08-15)
+
+**Features:**
+ - UWP Support
+   - Supported Architectures: x86, x86_64
+ - Forge Remastered Network Integration
+ - Added per channel volumes
+   - Added soft fade-in and fade-out to broadcast triggers
+ - Total internal rewrite of networking system to support optional p2p routing
+   - Significantly reduces latency and slightly reduces bandwidth costs
+   - Small BREAKING CHANGE to custom network integrations. Generic TPeer type must be a struct
+ - Added the ability to change Microphone at runtime (DissonanceComms:MicrophoneName property)
+   - Added a list of currently available Microphones to the DissonanceComms component inspector
+
+**Bug Fixes:**
+ - Fixed a Mac specific issue which would cause a crash in the microphone system if a headset was plugged in while recording (#33)
+ - Fixed multithreading issue in the Voice Activation Detector which could cause a segfault (#44)
+ - Fixed unsafe multithreaded access to preprocessor and encoder (#44)
+ - Prevented volume based comms trigger from attemtping to access dead objects if object is destroyed while inside trigger volume
+ - Fixed a null reference exception in HLAPI integration if HLAPI unexpectedly turns null
+
+**Known Issues:**
+ - UWP does not support ARM architecture (Windows phone)
+ - No Acoustic Echo Cancellation
+
+## v2.0.0 (2017-07-29)
+
+**New Features:**
+* Network restarts
+* Host migration
+* WebRTC based preprocessing pipeline
+* Added local mute with the VoicePlayerState:IsLocallyMuted property
+
+**Bug Fixes:**
+* Prevented VoicePlayerState:Priority property throwing an exception if accessed while no voice audio is playing
+* Fixed a null reference exception in the Forge integration when a connection is compared with null
+* Refactored how local mute works so the VAD still processes data even when the player is muted
+
+**Known Issues:**
+* Lacking platform support for Windows Universal Platform
+* No Acoustic Echo Cancellation
+* Disconnecting and reconnecting a headset can cause errors (believed to be a Mac specific error). Track Issue #33
+
+## v1.1.1 (2017-06-15)
+
+**New Features:**
+* Photon BOLT support
+* Totally overhauled all demo scenes
+* Added a checkbox to the LLAPI to disable it's network management (to prevent it from interfering with other LLAPI sessions).
+
+**Bug Fixes:**
+* Overhauled network disconnection logic to make it robustly handle a number of error cases
+* Fixed network simulation losing reliable packets
+* Fixed playback system throwing an overflow exception if a client disconnected while talking and then immediately reconnected
+* Fixed collider triggers sometimes not deactivating correctly when an entity leaves their volume
+* Fixed the HLAPI server writing a misleading (but harmless) error message when it is shutdown
+* Fixed trigger inspector showing the wrong room if the actual room no longer exists
+
+**Known Issues:**
+* Lacking platform support for Windows Universal Platform
+* No Acoustic Echo Cancellation
+* Disconnecting and reconnecting a headset can cause errors in some circumstances (possibly Mac only)
+
+## v1.1.0 (2017-06-10)
+
+**New Features:**
+* Photon BOLT support
+* Totally overhauled all demo scenes
+* Added a checkbox to the LLAPI to disable it's network management (to prevent it from interfering with other LLAPI sessions).
+
+**Bug Fixes:**
+* Overhauled network disconnection logic to make it robustly handle a number of error cases
+* Fixed network simulation losing reliable packets
+* Fixed playback system throwing an overflow exception if a client disconnected while talking and then immediately reconnected
+* Fixed collider triggers sometimes not deactivating correctly when an entity leaves their volume
+* Fixed the HLAPI server writing a misleading (but harmless) error message when it is shutdown
+* Fixed trigger inspector showing the wrong room if the actual room no longer exists
+
+**Known Issues:**
+* Lacking platform support for Windows Universal Platform
+* No Acoustic Echo Cancellation
+* Disconnecting and reconnecting a headset can cause errors in some circumstances (possibly Mac only)
+
+## v1.0.10 (2017-05-04)
+
+**Bug Fixes:**
+* Urgent fix for the welcome window introduced in 1.0.9 to ensure it pops up for all users on the first install
+* Fixed player disconnection tracking for HLAPI when running in dedicated server mode
+* Fixed voice not being received when no microphone is connected
+
+**Known Issues:**
+* Lacking platform support for Windows Universal Platform
+
+## v1.0.9 (2017-04-27)
+
+**New Features:**
+* New 'Welcome Window' pops up when you install a new version of Dissonance. Directs you to the online changelog and the integrations download site
+  * Integration have been removed from the package, they are now all available online
+* Added a VoicePlayerState object for the local player, provides events and live amplitude measurement for the local player
+
+**Bug Fixes:**
+* Fixed null reference exception being thrown if the VoiceBroadcastTrigger was misconfigured
+* Added a 4 byte session ID to the network layer (this can handle someone trying to run two Dissonance sessions on the same IP address)
+* Fixed PhotonCommsNetwork integration never properly shutting itself down (#25)
+
+**Known Issues:**
+* Lacking platform support for Windows Universal Platform
+
+## v1.0.8 (2017-04-10)
+
+**New Features:**
+* Completely new VAD! Based on the excellent voice detector created for the Chromium WebRTC project.
+* Showing live network traffic rates in the Dissonance network inspector (10 second moving average of traffic sent)
+* Improved calculation of microphone sample rate to do less unnecessary work when connected to a very high sample rate mic
+* Added 4 events to DissonanceComms:
+  * OnPlayerJoinedSession
+  * OnPlayerLeftSession
+  * OnPlayerStartedSpeaking
+  * OnPlayerStoppedSpeaking
+* Updated all custom editors to properly push onto the undo/redo stack when Dissonance components are modified
+
+**Bug Fixes:**
+* Fixed a potential desync between capture and playback when the microphone preprocessor input queue is full
+* Made it significantly less likely that the microphone preprocessor input queue will ever fill up
+* Prevented erroneuous error being printed in some circumstances ("Attempted to stop a session, but there is no active session")
+* Fixed VUMeter not compiling on Unity 5.4
+* Fixed Unity editor loading the wrong DLLs when configured for iOS platform
+* Fixed the playback system failing to play audio if the capture system closes a channel and re-opens the same channel within 40ms
+* Changed PlaybackPrefab (the non spatialized version) to not be spatialized
+
+**Known Issues:**
+* Lacking platform support for Windows Universal Platform
+
+## v1.0.7 (2017-04-04)
+
+**New Features:**
+* SALSA + Dissonance integration for real time lip sync!
+
+## v1.0.6 (2017-03-24)
+
+**New Features:**
+* Dedicated server support for LLAPI and HLAPI
+* Added some extra properties to VoicePlayerState (references to IDissonancePlayer component and VoicePlayback component for this player)
+* Added some extra events to VoicePlayerState which are raised when a player starts/stops talking and leaves the session.
+* Added an option to choose the microphone to use (MicrophoneName property on DissonanceComms - currently may only be set before the component is enabled)
+* Added live traffic statistics to the comms network inspector (packet/bandwidth counts for different classes of traffic)
+
+**Bug Fixes:**
+* Fixed the default spatial blend on a playback prefab being 0.0 (now it's 1.0)
+* Fixed positional audio playback when a spatializer is not in use (use the SpatializedPlaybackPrefab in Plugins/Dissonance/Resources if you are using a spatializer)
+* Fixed the jitter measurement from one player sometimes being applied to the next player to use that recycled playback instance for the first 1.2 seconds of speech
+* Fixed the playback pipeline being reset too eagerly (occasionally cutting off the first 2 frames of speech)
+
+**Known Issues:**
+* Lacking platform support for Windows Universal Platform
+* VAD does not always work well (particularly on mobile devices)
+
+## v1.0.5 (2017-03-06)
+
+**New Features:**
+* Added an inspector for the SamplePlaybackComponent which shows statistics on the playback pipeline
+
+**Bug Fixes:**
+* Fixed a multithreaded torn variable read on 32 bit systems
+* Fixed some serialization errors in the Forge demo scene
+* Included LLAPI demo scene in package
+* Fixed the `WaveFormat` property of the SpeechSession being wrong value
+* Fixed the playback system consuming samples at the wrong rate in some circumstances (causing serious desyncs)
+* Fixed the microphone capture pipeline losing samples when the pipeline is overloaded
+* Automatically resizing the buffers in the capture pipeline to make it harder to overload
+
+**Known Issues:**
+* Lacking platform support for Windows Universal Platform
+* VAD does not always work well (particularly on mobile devices)
+
+## v1.0.4 (2017-02-16)
+
+**New Features:**
+* Automatically adjusting playback speed to compensate for recording/playback clock skew.
+* Automatically adjusting the size of the playback buffer based on network jitter (more responsive voice in good conditions, less robot voice in bad conditions).
+
+**Bug Fixes:**
+* Fixed log system losing some message from non-main threads.
+* Fixed LLAPI integration not properly handling the disconnect event (leaving the session in an inconsistent state and preventing future reconnections).
+* Fixed microphone capture losing some data in extremely low framerate situations.
+* Refactored internals of BaseServer and BaseClient, this should not affect custom network integrations.
+
+**Known Issues:**
+* Lacking platform support for Windows Universal Platform
+* VAD does not always work well (particularly on mobile devices)
+* End users require a specific version of the C++ runtime installed
+
+## v1.0.3 (2017-02-07)
+
+**New Features:**
+* iOS support
+
+**Bug Fixes:**
+* Fixed logging system writing to the log file on worker threads (creating mangled logs)
+* Fixed text messages being sent to other players twice in some circumstances
+* Fixed voice playback not working when a new client joins a session and gets a recycled player object
+* Fixed voice playback not working when a new client joins a session and gets a recycled network connection ID
+
+**Known Issues:**
+* Lacking platform support for Windows Universal Platform
+* VAD does not always work well (particularly on mobile devices)
+
+## v1.0.2 (2017-01-25)
+
+**New Features:**
+* MacOS Support
+
+**Bug Fixes:**
+* Fixed voice transmision being broken while VAD delay line is active
+* Removed a number of classes from the Dissonance public API
+* Fixed playback system will breaking when the game is paused
+
+**Known Issues:**
+* Lacking platform support for: iOS, Windows Universal Platform

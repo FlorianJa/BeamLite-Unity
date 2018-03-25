@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/Main.unity
+    guid: 6a1a2d707a13567458c674ae1ac810cc
+  - enabled: 0
+    path: Assets/Scenes/VR.unity
+    guid: eb6d43d0f04d8fe4e9ca096885b838fd
+  - enabled: 0
+    path: Assets/Scenes/AR.unity
+    guid: bf6d9ecc25d51df4fad56f67ae9a5d37
+  - enabled: 0
+    path: Assets/Scenes/Kreativraum_VR.unity
+    guid: a5cf8effdb534f648827e6701252756f
+  - enabled: 1
+    path: Assets/Scenes/Kreativraum_AR.unity
+    guid: e23fed81c403f4e44aa317567a7e2581

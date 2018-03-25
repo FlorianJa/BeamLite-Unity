@@ -1,0 +1,52 @@
+# 
+# Wavefront material file
+# Created in RealityCapture v1.0.2
+# www.capturingreality.com
+# 
+
+newmtl kreativraum_wa_Material
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+
+newmtl kreativraum_wa_Material_u1_v1
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd kreativraum_wa_u1_v1.png
+
+newmtl kreativraum_wa_Material_u2_v1
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd kreativraum_wa_u2_v1.png
+
+newmtl kreativraum_wa_Material_u3_v1
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd kreativraum_wa_u3_v1.png
+
+newmtl kreativraum_wa_Material_u1_v2
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd kreativraum_wa_u1_v2.png
+
+newmtl kreativraum_wa_Material_u2_v2
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd kreativraum_wa_u2_v2.png
