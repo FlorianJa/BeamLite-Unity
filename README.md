@@ -1,5 +1,5 @@
 # BeamLite-Unity
-This is a prototype of a communication system for remote meetings. It uses virtual and augmented reality technology to create telepresence and social presence in distributed meeting settings. The idea is based on the [HoloViveObserver project of Drew Gottlieb](https://github.com/dag10/HoloViveObserver). 
+This is a prototype of a communication system for remote meetings. It uses virtual and augmented reality technologies to create telepresence and social presence in distributed meeting settings. The idea is based on the [HoloViveObserver project of Drew Gottlieb](https://github.com/dag10/HoloViveObserver). 
 
 # Requirements
 - Unity 2017.1.2p2
