@@ -165,7 +165,7 @@ public class NewWhiteboardPen : MonoBehaviour
 
                                 if (!_lastTouch)
                                 {
-                                    NetworkPlayer.ToggleTouch(true);
+                                    NetworkPlayer.SetTouch(true);
                                     _lastTouch = true;
                                 }
                             }
@@ -173,14 +173,14 @@ public class NewWhiteboardPen : MonoBehaviour
                             {
                                 if (_lastTouch)
                                 {
-                                    NetworkPlayer.ToggleTouch(false);
+                                    NetworkPlayer.SetTouch(false);
                                 }
                                 _lastTouch = false;
                             }
                         }
                         else
                         {
-                            NetworkPlayer.ToggleTouch(false);
+                            NetworkPlayer.SetTouch(false);
                             OutlineEffect.enabled = false;
                         }
                     }
@@ -289,7 +289,7 @@ public class NewWhiteboardPen : MonoBehaviour
                         // if in previous frame the tip didnt touch, set touch to true
                         if (!_lastTouch)
                         {
-                            NetworkPlayer.ToggleTouch(true);
+                            NetworkPlayer.SetTouch(true);
                             _lastTouch = true;
                             lastAngle = transform.rotation;
                         }
@@ -300,7 +300,7 @@ public class NewWhiteboardPen : MonoBehaviour
                         // if in previous frame the tip touched, set touch to true
                         if (_lastTouch)
                         {
-                            NetworkPlayer.ToggleTouch(false);
+                            NetworkPlayer.SetTouch(false);
                         }
                         _lastTouch = false;
                     }

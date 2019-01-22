@@ -93,7 +93,7 @@ public class OldWhiteboardPen : MonoBehaviour
                     // if in previous frame the tip didnt touch, set touch to true
                     if (!lastTouch)
                     {
-                        NetworkPlayer.ToggleTouch(true);
+                        NetworkPlayer.SetTouch(true);
                         lastTouch = true;
                         lastAngle = transform.rotation;
                     }
@@ -104,7 +104,7 @@ public class OldWhiteboardPen : MonoBehaviour
                     // if in previous frame the tip touched, set touch to true
                     if (lastTouch)
                     {
-                        NetworkPlayer.ToggleTouch(false);
+                        NetworkPlayer.SetTouch(false);
                     }
                     lastTouch = false;
                 }
