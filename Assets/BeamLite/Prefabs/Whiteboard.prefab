@@ -56,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: fb79d579baf241240920df7f5bfb6dc3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,4 +107,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426dc55c7775e98408910e85265de427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PenSize: 10
+  resetColor: {r: 0, g: 0, b: 0, a: 0}

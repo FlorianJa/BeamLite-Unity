@@ -443,6 +443,11 @@ Prefab:
       propertyPath: PenSize
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 23528268731502188, guid: 5be6e47edb19ca64eb6685f97471ffdc,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fb79d579baf241240920df7f5bfb6dc3, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5be6e47edb19ca64eb6685f97471ffdc, type: 2}
   m_IsPrefabParent: 0
@@ -1850,7 +1855,7 @@ MonoBehaviour:
   networkPlayer: {fileID: 1903929455698592, guid: 5e2a824ae02c83b47a6e79ebfce1f563,
     type: 2}
   playersContainer: {fileID: 1756311910}
-  MarkerOffset: {x: 0.4853, y: 0, z: 0.7243}
+  MarkerOffset: {fileID: 0}
   ConnectHoloLensWithoutMarkerScanning: 1
   NetworkDiscovery: {fileID: 1243881492}
   ServerAddressIsSet: 0

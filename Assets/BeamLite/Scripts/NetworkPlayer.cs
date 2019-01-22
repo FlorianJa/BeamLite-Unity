@@ -188,31 +188,31 @@ public class NetworkPlayer : NetworkBehaviour
         GlobalSyncingManager.Todo3State = state;
     }
 
-    public void ToggleTouch(bool isTouching)
+    public void SetTouch(bool isTouching)
     {
-        CmdToggleTouch(isTouching, this.netId);
+        CmdSetTouch(isTouching, this.netId);
     }
 
     [Command]
-    private void CmdToggleTouch(bool isTouching, NetworkInstanceId networkInstanceId)
+    private void CmdSetTouch(bool isTouching, NetworkInstanceId networkInstanceId)
     {
         if (GlobalSyncingManager.NetworkPlayerIdOfWritingPlayer <= 0 && isTouching == true)
         {
             GlobalSyncingManager.NetworkPlayerIdOfWritingPlayer = (int)networkInstanceId.Value;
-            RpcToggleTouch(isTouching, (int)networkInstanceId.Value);
+            RpcSetTouch(isTouching, (int)networkInstanceId.Value);
         }
         else if (isTouching == false && GlobalSyncingManager.NetworkPlayerIdOfWritingPlayer == networkInstanceId.Value)
         {
             GlobalSyncingManager.NetworkPlayerIdOfWritingPlayer = -1;
-            RpcToggleTouch(isTouching, -1);
+            RpcSetTouch(isTouching, -1);
         }
 
     }
 
     [ClientRpc]
-    private void RpcToggleTouch(bool isTouching, int networkInstanceId)
+    private void RpcSetTouch(bool isTouching, int networkInstanceId)
     {
-        Whiteboards[0].GetComponent<Whiteboard>().ToggleTouch(isTouching);
+        Whiteboards[0].GetComponent<Whiteboard>().SetTouching(isTouching);
     }
 
     public void SetTouchPosition(float x, float y, Color color, int penSize)
