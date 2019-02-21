@@ -15,6 +15,8 @@ public class NewWhiteboardPen : MonoBehaviour
     public bool IsPressed = false;
     public float YRotationOffset = 15;
     public float AR_DistanceBetweenHandAndWhiteboard = 0.75f;
+
+
     public Whiteboard Whiteboard;
 
     private Color _color = Color.black;
@@ -82,11 +84,20 @@ public class NewWhiteboardPen : MonoBehaviour
 
     }
 
+    internal void SetColor(Color color)
+    {
+        _color = color;
+    }
 
     public void SetColorAndPenSize(Color color, int penSize)
     {
         _color = color;
         PenSize = penSize;
+    }
+
+    internal void UpDownPenSize(bool up)
+    {
+        if (up) PenSize += 1; else PenSize -= 1;
     }
 
     #region VR_ONLY

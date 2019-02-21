@@ -65,6 +65,7 @@ namespace HoloToolkit.Examples.InteractiveElements
         public UnityEvent OnSelection;
         public UnityEvent OnDeselection;
         
+
         /// <summary>
         /// Set default visual states on Start
         /// </summary>

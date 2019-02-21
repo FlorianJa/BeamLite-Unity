@@ -1,4 +1,5 @@
-﻿using UnityEngine.VR;
+﻿using System;
+using UnityEngine.VR;
 
 public class Utils
 {
@@ -10,13 +11,15 @@ public class Utils
         Unknown,
         HoloLens,
         VR,
+        Vive,
+        Rift,
     }
 
     public static PlayerType CurrentPlayerType
     {
         get
         {
-            if (playerType == PlayerType.Undetermined)
+            if (playerType == PlayerType.Undetermined || playerType == PlayerType.VR)
             {
                 switch (VRSettings.loadedDeviceName)
                 {
@@ -24,7 +27,18 @@ public class Utils
                         playerType = PlayerType.HoloLens;
                         break;
                     case "OpenVR":
-                        playerType = PlayerType.VR;
+                        //playerType = PlayerType.VR;
+                        if (VRDevice.model != "")
+                        {
+                            if (VRDevice.model.Contains("Rift"))
+                            {
+                                playerType = PlayerType.Rift;
+                            }
+                            else if (VRDevice.model.Contains("Vive"))
+                            {
+                                playerType = PlayerType.Vive;
+                            }
+                        }
                         break;
                     default:
 #if UNITY_EDITOR
@@ -52,7 +66,7 @@ public class Utils
     {
         get
         {
-            return CurrentPlayerType == PlayerType.VR;
+            return (CurrentPlayerType == PlayerType.Rift || CurrentPlayerType == PlayerType.Vive || CurrentPlayerType == PlayerType.VR );
         }
     }
 }

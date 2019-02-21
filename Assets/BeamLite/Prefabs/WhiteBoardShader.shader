@@ -5,8 +5,6 @@ Shader "Custom/WhiteBoardShader" {
 		_Color ("Color", Color) = (1,1,1,1)
 		_CleanTex("CleanTex (RGBA32)", 2D) = "white" {}
 		_RoughTex1("RoughTex (RGBA32)", 2D) = "white" {}
-		_Glossiness ("Smoothness", Range(0,1)) = 0.5
-		_Metallic ("Metallic", Range(0,1)) = 0.0
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }
@@ -27,8 +25,6 @@ Shader "Custom/WhiteBoardShader" {
 			float2 uv_CleanTex;
 		};
 
-		half _Glossiness;
-		half _Metallic;
 		fixed4 _Color;
 
 		// Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
@@ -39,39 +35,14 @@ Shader "Custom/WhiteBoardShader" {
 		UNITY_INSTANCING_CBUFFER_END
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {
-			// Albedo comes from a texture tinted by color
 			fixed4 c0 = tex2D(_CleanTex, IN.uv_CleanTex);
 			fixed4 c1 = tex2D(_RoughTex, IN.uv_CleanTex);
-			//fixed4 c;//=c0*c1;
-			float a=max(max(c0.a,c1.a),_Color.a);
-            fixed4 c=c0*_Color;
-			if (c1.r!=_Color.r|| c1.g!=_Color.g||c1.b!=_Color.b) {
-				c = c1*_Color;
+			o.Alpha = c0.a + c1.a + _Color.a;//max(max(c0.a,c1.a),_Color.a);
+            o.Albedo = _Color.rgb*c0.rgb;
+			//if (c1.r>0||c1.g>0||c1.b>0) {
+			if(c1.a>0){
+				o.Albedo = _Color.rgb*c1.rgb;
 			}
-			//c.rgb=c.rgb*c.a+((1-c.a)*c1.a)*c1.rgb;
-			//c.a=c.a+(1-c.a)*c1.a;
-			//c.rgb=c.rgb*c.a+((1-c.a)*c2.a)*c2.rgb;
-			//c.a=c.a+(1-c.a)*c2.a;
-			//c.rgb=c.rgb*c.a+((1-c.a)*c3.a)*c3.rgb;
-			//c.a=c.a+(1-c.a)*c3.a;
-			o.Albedo=c.rgb;
-			o.Alpha=a;
-			//o.Albedo = (c+(c.a)) * (c1 + (c1.a))*(c2 + (c2.a))*(c3 + (c3.a))*_Color;
-//				* tex2D(_CleanTex, IN.uv_CleanTex).rgb 
-//				* tex2D(_RoughTex1, IN.uv_RoughTex1).rgb
-//				* tex2D(_RoughTex2, IN.uv_RoughTex2).rgb 
-//				* tex2D(_RoughTex3, IN.uv_RoughTex3).rgb;
-			//c.a = _Color.a;
-			//c.a += (1 - c.a)*tex2D(_CleanTex, IN.uv_CleanTex).a;
-			//o.Alpha = c.a;
-			//o.Alpha += (1 - o.Alpha)*c1;
-			//o.Alpha += (1 - o.Alpha)*c2;
-			//o.Alpha += (1 - o.Alpha)*c3;
-			//o.Alpha = 1;
-			//o.Albedo = c.rgb;
-			// Metallic and smoothness come from slider variables
-			o.Metallic = _Metallic;
-			o.Smoothness = _Glossiness;
 		}
 		ENDCG
 	}

@@ -34,7 +34,9 @@ public class BeamLiteVRTK_Rotator : MonoBehaviour {
         GetComponent<VRTK_ControllerEvents>().TouchpadPressed += new ControllerInteractionEventHandler(DoTouchpadPressed);
 
         GetComponent<VRTK_ControllerEvents>().TouchpadReleased += new ControllerInteractionEventHandler(DoTouchpadReleased);
+
     }
+    
 
     private void DoTouchpadReleased(object sender, ControllerInteractionEventArgs e)
     {

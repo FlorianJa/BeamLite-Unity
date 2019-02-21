@@ -198,7 +198,7 @@ public class HoloViveNetworkManager : NetworkManager
             //no Matches found
             else
             {
-                if (Utils.CurrentPlayerType == Utils.PlayerType.VR)
+                if (Utils.IsVR)
                 {
                     //If VR cant find a match, create default Match
                     CreateDefaultMatch();

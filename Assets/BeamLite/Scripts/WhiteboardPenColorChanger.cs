@@ -65,7 +65,7 @@ public class WhiteboardPenColorChanger : MonoBehaviour, IInputClickHandler
         if (WhiteboardPen != null)
         {
             // set the writingcolor of the pen
-            WhiteboardPen.GetComponent<NewWhiteboardPen>().SetColorAndPenSize(WritingColor,PenSizeForThisColor);
+            WhiteboardPen.GetComponent<NewWhiteboardPen>().SetColor(WritingColor);
 
             // change the material of the pen according to the writingcolor
             var renderer = WhiteboardPen.GetComponentInChildren<Renderer>();

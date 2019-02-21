@@ -107,22 +107,26 @@ MonoBehaviour:
   NetworkPlayerGameObject: {fileID: 0}
   LocalAlignmentTranslation: {x: 0, y: 0, z: 0}
   LocalAlignmentRotation: 0
-  HoloLensAvatar: {fileID: 1370304665135686, guid: 49f2b2f94e839b742894aec816fc8591,
+  HoloLensAvatar: {fileID: 1663473652934936, guid: d5b51cbf690b6c44d87c446b008448bc,
     type: 2}
-  HoloLensAvatar2: {fileID: 1504173942245554, guid: e982f0e63e1a20240b35285967aab236,
-    type: 2}
-  ViveAvatar: {fileID: 1322382437824332, guid: 0c7170dcda34ca44f9cc3122d92ad7b5, type: 2}
-  BodyPrefab: {fileID: 1200593015669144, guid: 99dbf9533ea70b845a7047765928d108, type: 2}
+  RiftAvatar: {fileID: 1259378634697504, guid: b36fcac5b9cf90e4d9773de9213a6130, type: 2}
+  ViveAvatar: {fileID: 1435350717224972, guid: 81de532493c497e4bafb8c8133ddee6e, type: 2}
+  BodyPrefab: {fileID: 1494778836772278, guid: d8d7d0406dd438740809853844530199, type: 2}
   PlayerType: 0
-  HandPrefabL: {fileID: 1567465386931692, guid: 97f6523ad65cc8048aaf6507c51c62e9,
+  HandPrefabL: {fileID: 1215094079972474, guid: e94ace5dbe41e884084eee46489f09fc,
     type: 2}
-  HandPrefabR: {fileID: 1131725482488946, guid: 21f47e6482c64d748a35c28aab8e4d65,
+  HandPrefabR: {fileID: 1732812794204912, guid: d5f52100d102b554d9480578f101c33b,
     type: 2}
-  HandPrefabHololens: {fileID: 1264909673528822, guid: 2181970b010e7214195b4343b540d896,
+  HandPrefabHololens: {fileID: 1215094079972474, guid: e94ace5dbe41e884084eee46489f09fc,
     type: 2}
   TextFieldForPlayerName: {fileID: 114370902611625540}
   NotSpeakingColor: {r: 1, g: 1, b: 1, a: 1}
   SpeakingColor: {r: 0.14775623, g: 0.77205884, b: 0.096507356, a: 1}
+  possible_textures:
+  - {fileID: 2800000, guid: b94d22892ead5b04384461b6d9ab7365, type: 3}
+  - {fileID: 2800000, guid: a9c4709ee20769d42a08f4a2469d811d, type: 3}
+  PoseL: -1
+  PoseR: -1
 --- !u!114 &114370902611625540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -269,7 +273,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.0098, y: 0.1921}
+  m_AnchoredPosition: {x: 0, y: 0.3}
   m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224562407516695482

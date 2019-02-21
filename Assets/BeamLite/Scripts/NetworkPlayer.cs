@@ -14,8 +14,6 @@ public class NetworkPlayer : NetworkBehaviour
     [SyncVar]
     public Vector3 AlignmentTranslation;
 
-   
-
     [SyncVar]
     public float AlignmentRotation;
 
@@ -35,6 +33,35 @@ public class NetworkPlayer : NetworkBehaviour
 
     [SyncVar]
     public string PlayerName;
+
+    [SyncVar]
+
+    public float Hipsize;
+
+    [SyncVar]
+
+    public float Bellysize;
+
+    [SyncVar]
+
+    public float Breastsize;
+
+    [SyncVar]
+
+    public float Shouldersize;
+
+    [SyncVar]
+
+    public int PoseRight;
+
+    [SyncVar]
+
+    public int PoseLeft;
+
+    [SyncVar]
+
+    public int TextureNum;
+    
 
     public GameObject Hand1;
     public GameObject Hand2;
@@ -64,6 +91,7 @@ public class NetworkPlayer : NetworkBehaviour
     public GlobalSyncingManager GlobalSyncingManager;
     private GameObject Clock;
 
+    private int _leftpose=-1, _rightpose=-1;
 
 
     /// <summary>
@@ -78,13 +106,13 @@ public class NetworkPlayer : NetworkBehaviour
         GlobalSyncingManager = GameObject.Find("GlobalSyncingManager").GetComponent<GlobalSyncingManager>();
 
         //on vr spawn for every remote player an avatar
-        if (Utils.CurrentPlayerType == Utils.PlayerType.VR && !isLocalPlayer)
+        if ((Utils.IsVR) && !isLocalPlayer)
         {
             SpawnAvatar(true);
         }
         else
         {
-            if(Utils.CurrentPlayerType == Utils.PlayerType.HoloLens && this.PlayerType == Utils.PlayerType.VR)
+            if(Utils.CurrentPlayerType == Utils.PlayerType.HoloLens && (this.PlayerType == Utils.PlayerType.Rift || this.PlayerType == Utils.PlayerType.Vive || this.PlayerType==Utils.PlayerType.VR))
             {
                 SpawnAvatar(true);
             }
@@ -126,8 +154,8 @@ public class NetworkPlayer : NetworkBehaviour
 
         if (_vrCameraRig)
         {
-            _viveControllerLeft = _vrCameraRig.GetComponent<SteamVR_ControllerManager>().left.transform.Find("tatzeRaccoonL");
-            _viveControllerRight = _vrCameraRig.GetComponent<SteamVR_ControllerManager>().right.transform.Find("tatzeRaccoonR");
+            _viveControllerLeft = _vrCameraRig.GetComponent<SteamVR_ControllerManager>().left.transform.Find("Lefthand");
+            _viveControllerRight = _vrCameraRig.GetComponent<SteamVR_ControllerManager>().right.transform.Find("Righthand");
 
             if (_viveControllerRight) CmdUpdateHandVisibilityRight(true);
             if (_viveControllerLeft) CmdUpdateHandVisibilityLeft(true);
@@ -231,7 +259,7 @@ public class NetworkPlayer : NetworkBehaviour
     {
         Whiteboards[0].GetComponent<Whiteboard>().SetTouchPosition(x, y, color, penSize);
     }
-
+    
     public void ClearWhiteboard()
     {
         CmdClearWhiteboard();
@@ -333,9 +361,17 @@ public class NetworkPlayer : NetworkBehaviour
 
             if (_viveControllerLeft)
             {
-                Hand2.transform.position = _viveControllerRight.transform.position;
-                Hand2.transform.rotation = _viveControllerRight.transform.rotation;
+                Hand2.transform.position = _viveControllerLeft.transform.position;
+                Hand2.transform.rotation = _viveControllerLeft.transform.rotation;
             }
+        }
+        if (Avatar.GetComponent<AvatarController>().PoseL != PoseLeft)
+        {
+            Avatar.GetComponent<AvatarController>().PoseL = PoseLeft;
+        }
+        if (Avatar.GetComponent<AvatarController>().PoseR != PoseRight)
+        {
+            Avatar.GetComponent<AvatarController>().PoseR = PoseRight;
         }
     }
 
@@ -360,13 +396,13 @@ public class NetworkPlayer : NetworkBehaviour
     /// <param name="playerType"></param>
     /// <param name="playerCounter"></param>
     [ClientRpc]
-    public void RpcSetupPlayer(Vector3 alignmentTranslation, float alignmentYRotation, Utils.PlayerType playerType, int playerCounter, Vector3 markerOffset, string playerName)
+    public void RpcSetupPlayer(Vector3 alignmentTranslation, float alignmentYRotation, Utils.PlayerType playerType, int playerCounter, Vector3 markerOffset, string playerName, float hipsize, float bellysize, float breastsize, float shouldersize, int texturenum)
     {
-        SetupPlayer(alignmentTranslation, alignmentYRotation, playerType, playerCounter, markerOffset, playerName);
+        SetupPlayer(alignmentTranslation, alignmentYRotation, playerType, playerCounter, markerOffset, playerName, hipsize, bellysize, breastsize, shouldersize, texturenum);
     }
 
     [Client]
-    public void SetupPlayer(Vector3 alignmentTranslation, float alignmentYRotation, Utils.PlayerType playerType, int playerCounter, Vector3 markerOffset, string playerName)
+    public void SetupPlayer(Vector3 alignmentTranslation, float alignmentYRotation, Utils.PlayerType playerType, int playerCounter, Vector3 markerOffset, string playerName, float hipsize, float bellysize, float breastsize, float shouldersize, int texturenum)
     {
         AlignmentTranslation = alignmentTranslation;
         AlignmentRotation = alignmentYRotation;
@@ -374,6 +410,11 @@ public class NetworkPlayer : NetworkBehaviour
         PlayerCounter = playerCounter;
         MarkerOffset = markerOffset;
         PlayerName = playerName;
+        Hipsize = hipsize;
+        Bellysize = bellysize;
+        Breastsize = breastsize;
+        Shouldersize = shouldersize;
+        TextureNum = texturenum;
     }
 
     [Client]

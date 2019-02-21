@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef6bafa3bdafa14eb3c1368bb6afdba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Avatar: {fileID: 0}
+  Avatar: {fileID: 1494973017587620, guid: 9842634cd2acf8b4aad6944b186d5b63, type: 2}
 --- !u!114 &114504710722989094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -225,6 +225,13 @@ MonoBehaviour:
   PlayerCounter: 0
   MarkerOffset: {x: 0, y: 0, z: 0}
   PlayerName: 
+  Hipsize: 0
+  Bellysize: 0
+  Breastsize: 0
+  Shouldersize: 0
+  PoseRight: 0
+  PoseLeft: 0
+  TextureNum: 0
   Hand1: {fileID: 1132372502039320}
   Hand2: {fileID: 1527882481302062}
   AvatarPrefab: {fileID: 1494973017587620, guid: 9842634cd2acf8b4aad6944b186d5b63,

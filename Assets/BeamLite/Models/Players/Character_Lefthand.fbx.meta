@@ -1,0 +1,225 @@
+fileFormatVersion: 2
+guid: fc90321000ccae64c822db8014bcf8cb
+timeCreated: 1548189353
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: DaumenR1
+    100004: DaumenR2
+    100006: DaumenR3
+    100008: DaumenR3_end
+    100010: HandR
+    100012: Lefthand
+    100014: LefthandArmature
+    100016: MittelfingerR1
+    100018: MittelfingerR2
+    100020: MittelfingerR3
+    100022: MittelfingerR3_end
+    100024: RingfingerR1
+    100026: RingfingerR2
+    100028: RingfingerR3
+    100030: RingfingerR3_end
+    100032: ZeigefingerR1
+    100034: ZeigefingerR2
+    100036: ZeigefingerR3
+    100038: ZeigefingerR3_end
+    100040: KleinerfingerR1
+    100042: KleinerfingerR2
+    100044: KleinerfingerR3
+    100046: KleinerfingerR3_end
+    400000: //RootNode
+    400002: DaumenR1
+    400004: DaumenR2
+    400006: DaumenR3
+    400008: DaumenR3_end
+    400010: HandR
+    400012: Lefthand
+    400014: LefthandArmature
+    400016: MittelfingerR1
+    400018: MittelfingerR2
+    400020: MittelfingerR3
+    400022: MittelfingerR3_end
+    400024: RingfingerR1
+    400026: RingfingerR2
+    400028: RingfingerR3
+    400030: RingfingerR3_end
+    400032: ZeigefingerR1
+    400034: ZeigefingerR2
+    400036: ZeigefingerR3
+    400038: ZeigefingerR3_end
+    400040: KleinerfingerR1
+    400042: KleinerfingerR2
+    400044: KleinerfingerR3
+    400046: KleinerfingerR3_end
+    4300000: Lefthand
+    7400000: Armature.002Action
+    7400002: LefthandArmature|Armature.002Action.001
+    7400004: LefthandArmature|LefthandGrab
+    7400006: LefthandArmature|LefthandIdle
+    7400008: LefthandArmature|LefthandPointing
+    7400010: LefthandArmature|none
+    7400012: LefthandArmature|PoseLib.001
+    7400014: LefthandArmature|RighthandIdle
+    9500000: //RootNode
+    13700000: Lefthand
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: LefthandArmature|LefthandGrab
+      takeName: LefthandArmature|Lefthandgrab
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: LefthandArmature|LefthandIdle
+      takeName: LefthandArmature|LefthandIdle
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: LefthandArmature|LefthandPointing
+      takeName: LefthandArmature|LefthandPointing
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.2
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: HandR
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
